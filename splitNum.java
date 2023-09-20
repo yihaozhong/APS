@@ -22,21 +22,7 @@ public class splitNum {
 
         return new int[] { Integer.parseInt(left.toString(), 2), Integer.parseInt(right.toString(), 2) };
     }
-    public static int[] split2 (int n) {
-        int numBits = Integer.SIZE - Integer.numberOfLeadingZeros(n);
-        
-        int evenMask = 0;
-        for (int i = 0; i < numBits; i += 2) {
-            evenMask |= (1 << i);
-        }
 
-        int oddMask = evenMask << 1;
-
-        int a = n & evenMask;
-        int b = n & oddMask;
-        
-        return new int[] { a, b };
-    }
 
     public static void main(String[] args) {
         int n = 13;  

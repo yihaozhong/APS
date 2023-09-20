@@ -6,6 +6,8 @@ public class perfectNum {
         long in = sc.nextLong();
         if (in < 6){
             System.out.println("NOT PERFECT");
+            sc.close();
+            return;
         }
         long sum = 1;
         for(long i = 2; i * i <=in ; i++){
