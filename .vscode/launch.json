@@ -1,0 +1,20 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "java",
+      "name": "Train",
+      "request": "launch",
+      "mainClass": "Train",
+      "projectName": "APS_14c7c0e4"
+    },
+    {
+      "name": "C/C++ Runner: Debug Session",
+      "type": "lldb",
+      "request": "launch",
+      "args": [],
+      "cwd": "/Users/zhongyihao/Desktop/APS",
+      "program": "/Users/zhongyihao/Desktop/APS/build/Debug/outDebug"
+    }
+  ]
+}
