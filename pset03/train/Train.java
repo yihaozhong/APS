@@ -7,11 +7,15 @@ public class Train {
         int n = input.nextInt();
 
         while(true){
+            int first = input.nextInt();
+            if (first == 0) {
+                break; // End of this block of input
+            }
             int[] sequence = new int[n];
-            for(int i = 0; i <n; i++){
+            sequence[0] = first;
+            for(int i = 1; i <n; i++){
                 sequence[i] = input.nextInt();
             }
-            input.nextInt();
 
             if (sequence[0] == 0){
                 break;
@@ -23,12 +27,10 @@ public class Train {
             for(int i =1; i <=n; i++){
                 stack.push(i);
 
-                while(!stack.isEmpty() && stack.peek() == sequence[j]){
+                while(!stack.isEmpty() && stack.peek() == sequence[j] && j<n){
                     stack.pop();
                     j++;
-                    if (j >= n){
-                        break;
-                    }
+
                 }
             }
 
@@ -38,7 +40,6 @@ public class Train {
             }else{
                 System.out.println("No");
             }
-            break;
         }
         input.close();
     }
