@@ -1,5 +1,8 @@
-CXX := clang++
-CXXFLAGS := -std=c++17 -O2 -Wall -Wextra
+
+# Java compiler and flags
+JAVAC := javac
+JAVA := java
+JAVACFLAGS :=
 
 # problem set and problem name as variables
 PROBLEM_SET := pset01
@@ -14,10 +17,11 @@ OUTPUT_FILE := $(PROBLEM_SET)/$(PROBLEM_NAME)/$(PROBLEM_NAME).out
 RESULT_FILE := $(PROBLEM_SET)/$(PROBLEM_NAME)/$(PROBLEM_NAME).res
 
 # source file
-SOURCE_FILE := $(PROBLEM_SET)/$(PROBLEM_NAME)/main.cpp
+SOURCE_FILE := $(PROBLEM_SET)/$(PROBLEM_NAME)/Main.java
 
-# executable path
-EXECUTABLE := $(BUILD_DIR)/$(PROBLEM_SET)/$(PROBLEM_NAME)
+# executable path (class files)
+EXECUTABLE_DIR := $(BUILD_DIR)/$(PROBLEM_SET)/$(PROBLEM_NAME)
+EXECUTABLE := $(EXECUTABLE_DIR)/Main.class
 
 .PHONY: all compile run clean
 
@@ -27,19 +31,19 @@ compile: $(EXECUTABLE)
 
 $(EXECUTABLE): $(SOURCE_FILE)
 	@echo "Compiling $<"
-	mkdir -p $(dir $@)
-	$(CXX) $(CXXFLAGS) -o $@ $<
+	mkdir -p $(EXECUTABLE_DIR)
+	$(JAVAC) $(JAVACFLAGS) -d $(EXECUTABLE_DIR) $<
 
 run: $(EXECUTABLE)
 	@if [ -e $(INPUT_FILE) ]; then \
 		echo "Using input file: ${INPUT_FILE}"; \
-		$< < $(INPUT_FILE) > $(RESULT_FILE); \
+		$(JAVA) -cp $(EXECUTABLE_DIR) Main < $(INPUT_FILE) > $(RESULT_FILE); \
 		if [ -e $(OUTPUT_FILE) ]; then \
 			diff $(RESULT_FILE) $(OUTPUT_FILE); \
 		fi \
 	else \
 		echo "Using stdin and stdout (no input file detected)"; \
-		$<; \
+		$(JAVA) -cp $(EXECUTABLE_DIR) Main; \
 	fi
 
 clean:

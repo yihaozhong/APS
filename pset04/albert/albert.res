@@ -1,11 +1,15 @@
 a
+abc
 albert
 and
+awre
 book
 create
 day
 dictionary
 dream
+end
+front
 has
 have
 he

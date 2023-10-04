@@ -3,6 +3,13 @@
   "configurations": [
     {
       "type": "java",
+      "name": "Main",
+      "request": "launch",
+      "mainClass": "Main",
+      "projectName": "APS_14c7c0e4"
+    },
+    {
+      "type": "java",
       "name": "Train",
       "request": "launch",
       "mainClass": "Train",

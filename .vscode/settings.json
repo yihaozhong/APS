@@ -38,10 +38,7 @@
   "C_Cpp_Runner.compilerArgs": [],
   "C_Cpp_Runner.linkerArgs": [],
   "C_Cpp_Runner.includePaths": [],
-  "C_Cpp_Runner.includeSearch": [
-    "*",
-    "**/*"
-  ],
+  "C_Cpp_Runner.includeSearch": ["*", "**/*"],
   "C_Cpp_Runner.excludeSearch": [
     "**/build",
     "**/build/**",
@@ -61,5 +58,6 @@
     "iosfwd": "cpp",
     "ostream": "cpp",
     "iostream": "cpp"
-  }
+  },
+  "editor.defaultFormatter": "esbenp.prettier-vscode"
 }
