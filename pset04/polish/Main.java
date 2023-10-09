@@ -53,5 +53,6 @@ public class Main {
         for (char c : output) {
             System.out.print(c);
         }
+        System.out.println();
     }
 }
