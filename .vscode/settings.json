@@ -59,5 +59,9 @@
     "ostream": "cpp",
     "iostream": "cpp"
   },
-  "editor.defaultFormatter": "esbenp.prettier-vscode"
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "java.format.enabled": true,
+  "[java]": {
+    "editor.defaultFormatter": "redhat.java"
+  }
 }

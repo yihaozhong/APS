@@ -12,9 +12,9 @@ PROBLEM_NAME := add
 BUILD_DIR := build
 
 # input and output file paths
-INPUT_FILE := $(PROBLEM_SET)/$(PROBLEM_NAME)/$(PROBLEM_NAME).in
-OUTPUT_FILE := $(PROBLEM_SET)/$(PROBLEM_NAME)/$(PROBLEM_NAME).out
-RESULT_FILE := $(PROBLEM_SET)/$(PROBLEM_NAME)/$(PROBLEM_NAME).res
+INPUT_FILE_TEMPLATE := $(PROBLEM_SET)/$(PROBLEM_NAME)/$(PROBLEM_NAME)$(TEST_NUMBER).in
+OUTPUT_FILE_TEMPLATE := $(PROBLEM_SET)/$(PROBLEM_NAME)/$(PROBLEM_NAME)$(TEST_NUMBER).out
+RESULT_FILE_TEMPLATE := $(PROBLEM_SET)/$(PROBLEM_NAME)/$(PROBLEM_NAME)$(TEST_NUMBER).res
 
 # source file
 SOURCE_FILE := $(PROBLEM_SET)/$(PROBLEM_NAME)/Main.java
@@ -35,16 +35,18 @@ $(EXECUTABLE): $(SOURCE_FILE)
 	$(JAVAC) $(JAVACFLAGS) -d $(EXECUTABLE_DIR) $<
 
 run: $(EXECUTABLE)
-	@if [ -e $(INPUT_FILE) ]; then \
-		echo "Using input file: ${INPUT_FILE}"; \
-		$(JAVA) -cp $(EXECUTABLE_DIR) Main < $(INPUT_FILE) > $(RESULT_FILE); \
-		if [ -e $(OUTPUT_FILE) ]; then \
-			diff $(RESULT_FILE) $(OUTPUT_FILE); \
+	@for i in $(PROBLEM_SET)/$(PROBLEM_NAME)/*.in; do \
+		TEST_NUMBER=$${i#*$(PROBLEM_NAME)}; \
+		TEST_NUMBER=$${TEST_NUMBER%.in}; \
+		INPUT_FILE=$$i; \
+		OUTPUT_FILE=$(PROBLEM_SET)/$(PROBLEM_NAME)$${TEST_NUMBER}.out; \
+		RESULT_FILE=$(PROBLEM_SET)/$(PROBLEM_NAME)$${TEST_NUMBER}.res; \
+		echo "Using input file: $${INPUT_FILE}"; \
+		$(JAVA) -cp $(EXECUTABLE_DIR) Main < $${INPUT_FILE} > $${RESULT_FILE}; \
+		if [ -e $${OUTPUT_FILE} ]; then \
+			diff $${RESULT_FILE} $${OUTPUT_FILE}; \
 		fi \
-	else \
-		echo "Using stdin and stdout (no input file detected)"; \
-		$(JAVA) -cp $(EXECUTABLE_DIR) Main; \
-	fi
+	done
 
 clean:
 	@echo "Cleaning up..."

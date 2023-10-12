@@ -4,7 +4,7 @@ import java.util.Scanner;
 public class Main {
     private static int[][] C = new int[27][27]; // Combination values
 
-    private static void computeCombinations() {
+    private static void Combin() {
         for (int i = 0; i <= 26; i++) {
             C[i][0] = 1;
             for (int j = 1; j <= i; j++) {
@@ -13,7 +13,7 @@ public class Main {
         }
     }
 
-    public static int getRank(String s) {
+    public static int helper(String s) {
         int rank = 0;
         int len = s.length();
         
@@ -39,11 +39,11 @@ public class Main {
     }
     
     public static void main(String[] args) {
-        computeCombinations();
+        Combin();
         Scanner sc = new Scanner(System.in);
         String s = sc.next();
         if(isValid(s)){
-        System.out.print(getRank(s));
+        System.out.print(helper(s));
         }else{
             System.out.print(0);
         }
