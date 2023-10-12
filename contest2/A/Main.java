@@ -29,6 +29,7 @@ public class Main {
                 }
                 if (n >= m * 2)
                     break;
+
             }
             if (!x.contains(s))
                 System.out.println(-1);
