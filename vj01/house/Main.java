@@ -4,42 +4,50 @@ public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
-        int N = scanner.nextInt(); // plots
-        int M = scanner.nextInt(); // circular houses
-        int K = scanner.nextInt(); // square houses
+        int N = scanner.nextInt();
+        int M = scanner.nextInt();
+        int K = scanner.nextInt();
 
+        // Read and sort plot radii
         double[] plotRadii = new double[N];
         for (int i = 0; i < N; i++) {
             plotRadii[i] = scanner.nextDouble();
         }
         Arrays.sort(plotRadii);
 
-        double[] cirHouse = new double[M];
+        // Read and sort circular house radii
+        double[] circularHouseRadii = new double[M];
         for (int i = 0; i < M; i++) {
-            cirHouse[i] = scanner.nextDouble();
+            circularHouseRadii[i] = scanner.nextDouble();
         }
-        Arrays.sort(cirHouse);
+        Arrays.sort(circularHouseRadii);
 
-        double[] squareHouse = new double[K];
+        // Read and sort square house diagonal lengths (diagonal is s * sqrt(2))
+        double[] squareHouseDiagonals = new double[K];
         for (int i = 0; i < K; i++) {
-            squareHouse[i] = scanner.nextDouble() * Math.sqrt(2) / 2;
+            squareHouseDiagonals[i] = scanner.nextDouble() * Math.sqrt(2) / 2;
         }
-        Arrays.sort(squareHouse);
+        Arrays.sort(squareHouseDiagonals);
 
         int plotsFilled = 0;
-        int circularHouseIndex = M - 1; // Start from the largest
-        int squareHouseIndex = K - 1;
+        int plotIndex = N - 1; //
+        int circularHouseIndex = M - 1; //
+        int squareHouseIndex = K - 1; //
 
-        for (int i = N - 1; i >= 0; i--) {
-            if (circularHouseIndex >= 0 && cirHouse[circularHouseIndex] < plotRadii[i]) {
-                // Fit a circular
-                plotsFilled++;
-                circularHouseIndex--;
-            } else if (squareHouseIndex >= 0 && squareHouse[squareHouseIndex] < plotRadii[i]) {
-                // square
+        while (plotIndex >= 0 && squareHouseIndex >= 0) {
+            if (squareHouseDiagonals[squareHouseIndex] < plotRadii[plotIndex]) {
                 plotsFilled++;
                 squareHouseIndex--;
             }
+            plotIndex--;
+        }
+
+        while (plotIndex >= 0 && circularHouseIndex >= 0) {
+            if (circularHouseRadii[circularHouseIndex] < plotRadii[plotIndex]) {
+                plotsFilled++;
+                circularHouseIndex--;
+            }
+            plotIndex--;
         }
 
         System.out.println(plotsFilled);
