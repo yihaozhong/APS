@@ -3,45 +3,23 @@ import java.util.Scanner;
 public class Main {
 
     public static long maximizeOR(long N, long L, long R) {
-        long x = N;
+        long x = R;
 
-        // If x is within the range, it's already maximized
-        if (x >= L && x <= R) {
-            return x;
-        }
+        for (int i = 31; i >= 0; i--) {
+            long mask = 1L << i;
 
-        // If x is less than L, set x to L because it's the smallest value within the
-        // range
-        if (x < L) {
-            x = L;
-        }
+            // Check if x and N both have 1 in the current bit position.
+            if (((x & mask) != 0) && ((N & mask) != 0)) {
+                long potentialX = (x & ~mask) | ((mask - 1) & ~N);
 
-        // If x is greater than R, we need to adjust the bits
-        if (x > R) {
-            for (int i = 63; i >= 0; i--) {
-                long mask = 1L << i;
-
-                // Check if the bit at this position is the same for both x and N
-                if ((x & mask) != 0 && (N & mask) != 0) {
-                    // Try setting the current bit to 0 and all less significant bits to 1
-                    long potentialX = (x & ~mask) | (mask - 1);
-
-                    // If potentialX is less than L, we can't set this bit to 0
-                    if (potentialX < L) {
-                        continue;
-                    }
-
-                    // Otherwise, if potentialX is within the range [L, R], we can set this bit to 0
-                    if (potentialX <= R) {
-                        x = potentialX;
-                        break;
-                    }
+                // If potentialX is within the range and greater than or equal to L, update x
+                if (potentialX >= L) {
+                    x = potentialX;
                 }
             }
         }
 
-        // Ensure that x is within the range [L, R]
-        return Math.min(Math.max(x, L), R);
+        return x;
     }
 
     public static void main(String[] args) {
