@@ -34,8 +34,8 @@
       "type": "lldb",
       "request": "launch",
       "args": [],
-      "cwd": "/Users/zhongyihao/Desktop/APS/pset03/keyboard",
-      "program": "/Users/zhongyihao/Desktop/APS/pset03/keyboard/build/Debug/outDebug"
+      "cwd": "/Users/zhongyihao/Desktop/APS/pset03/awesome",
+      "program": "/Users/zhongyihao/Desktop/APS/pset03/awesome/build/Debug/outDebug"
     }
   ]
 }

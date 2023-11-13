@@ -38,7 +38,10 @@
   "C_Cpp_Runner.compilerArgs": [],
   "C_Cpp_Runner.linkerArgs": [],
   "C_Cpp_Runner.includePaths": [],
-  "C_Cpp_Runner.includeSearch": ["*", "**/*"],
+  "C_Cpp_Runner.includeSearch": [
+    "*",
+    "**/*"
+  ],
   "C_Cpp_Runner.excludeSearch": [
     "**/build",
     "**/build/**",
@@ -63,5 +66,6 @@
   "java.format.enabled": true,
   "[java]": {
     "editor.defaultFormatter": "redhat.java"
-  }
+  },
+  "C_Cpp_Runner.msvcSecureNoWarnings": false
 }
