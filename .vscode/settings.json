@@ -67,5 +67,6 @@
   "[java]": {
     "editor.defaultFormatter": "redhat.java"
   },
-  "C_Cpp_Runner.msvcSecureNoWarnings": false
+  "C_Cpp_Runner.msvcSecureNoWarnings": false,
+  "editor.inlineSuggest.showToolbar": "always"
 }
