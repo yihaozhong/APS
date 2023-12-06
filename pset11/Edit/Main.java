@@ -1,27 +1,48 @@
 import java.util.*;
 
 public class Main {
-    // Function to check if two words differ by exactly one letter
-    private static boolean isAdjacent(String a, String b) {
-        int count = 0;
-        int n = a.length();
+    // differ by one letter
+    // private static boolean isAdjacent(String a, String b) {
+    // int count = 0;
+    // int n = a.length();
 
-        for (int i = 0; i < n; i++) {
-            if (a.charAt(i) != b.charAt(i)) {
-                count++;
+    // for (int i = 0; i < n; i++) {
+    // if (a.charAt(i) != b.charAt(i)) {
+    // count++;
+    // }
+    // if (count > 1) {
+    // return false;
+    // }
+    // }
+    // return true;
+    // }
+
+    private static List<String> genWord(String word, Set<String> wordSet) {
+        List<String> adjacentWords = new ArrayList<>();
+        char[] chars = word.toCharArray();
+        for (int i = 0; i < chars.length; i++) {
+            char originalChar = chars[i];
+            for (char c = '0'; c <= 'z'; c++) {
+                if ((c > '9' && c < 'a') || c == originalChar)
+                    continue;
+                chars[i] = c;
+                String newWord = new String(chars);
+                if (wordSet.contains(newWord)) {
+                    adjacentWords.add(newWord);
+                }
             }
-            if (count > 1) {
-                return false;
-            }
+            chars[i] = originalChar;
         }
-        return true;
+        return adjacentWords;
     }
 
-    private static int bfs(String start, String end, Map<String, List<String>> graph) {
+    private static int bfs(Set<String> wordSet, String start, String end) {
+        if (start.equals(end))
+            return 0;
+
         Queue<Pair<String, Integer>> queue = new LinkedList<>();
         Set<String> visited = new HashSet<>();
-
-        queue.add(new Pair<>(start, 0));
+        queue.offer(new Pair<>(start, 0));
         visited.add(start);
 
         while (!queue.isEmpty()) {
@@ -29,40 +50,25 @@ public class Main {
             String word = node.getFirst();
             int depth = node.getSecond();
 
-            if (word.equals(end)) {
-                return depth;
-            }
-
-            for (String adjacent : graph.get(word)) {
-                if (!visited.contains(adjacent)) {
-                    visited.add(adjacent);
-                    queue.add(new Pair<>(adjacent, depth + 1));
+            for (String nextWord : genWord(word, wordSet)) {
+                if (nextWord.equals(end))
+                    return depth + 1;
+                if (visited.add(nextWord)) {
+                    queue.offer(new Pair<>(nextWord, depth + 1));
                 }
             }
         }
-
         return 0;
     }
 
-    public static List<Integer> wordLadderTransformations(int n, List<String> words, int m,
+    public static List<Integer> findAll(int n, List<String> words, int m,
             List<Pair<String, String>> queries) {
-        Map<String, List<String>> graph = new HashMap<>();
-        for (String word : words) {
-            graph.put(word, new ArrayList<>());
-        }
 
-        for (int i = 0; i < n; i++) {
-            for (int j = i + 1; j < n; j++) {
-                if (isAdjacent(words.get(i), words.get(j))) {
-                    graph.get(words.get(i)).add(words.get(j));
-                    graph.get(words.get(j)).add(words.get(i));
-                }
-            }
-        }
+        Set<String> wordSet = new HashSet<>(words);
 
         List<Integer> results = new ArrayList<>();
         for (Pair<String, String> query : queries) {
-            results.add(bfs(query.getFirst(), query.getSecond(), graph));
+            results.add(bfs(wordSet, query.getFirst(), query.getSecond()));
         }
 
         return results;
@@ -102,10 +108,10 @@ public class Main {
 
         List<Pair<String, String>> queries = new ArrayList<>();
         for (int i = 0; i < m; i++) {
-            String[] parts = scanner.nextLine().trim().split(" ");
+            String[] parts = scanner.nextLine().split(" ");
             queries.add(new Pair<>(parts[0], parts[1]));
         }
-        List<Integer> results = wordLadderTransformations(n, words, m, queries);
+        List<Integer> results = findAll(n, words, m, queries);
         for (int result : results) {
             System.out.println(result);
         }
