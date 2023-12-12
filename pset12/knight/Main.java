@@ -38,20 +38,26 @@ public class Main {
             int[] square = queue.poll();
             int x = square[0], y = square[1];
             int count = 0;
+            int[][] directions;
+            if (M == 0 || N == 0) {
+                int sum = M + N;
+                directions = new int[][] {
+                        { sum, 0 }, { -sum, 0 }, { 0, sum }, { 0, -sum }
+                };
+            } else {
+                directions = new int[][] {
+                        { M, N }, { M, -N }, { -M, N }, { -M, -N },
+                        { N, M }, { N, -M }, { -N, M }, { -N, -M }
+                };
+            }
 
-            for (int dx : new int[] { M, -M }) { 
-                for (int dy : new int[] { N, -N }) {
-                    int[][] twice = new int[][] { 
-                                                    { dx, dy }, { dy, dx } };
-                    for (int[] d : twice) {
-                        int newX = x + d[0], newY = y + d[1];
-                        if (isValid(newX, newY)) {
-                            count++;
-                            if (!visited[newX][newY]) {
-                                queue.add(new int[] { newX, newY });
-                                visited[newX][newY] = true;
-                            }
-                        }
+            for (int[] d : directions) {
+                int newX = x + d[0], newY = y + d[1]; // move
+                if (isValid(newX, newY)) {
+                    count++;
+                    if (!visited[newX][newY]) {
+                        queue.add(new int[] { newX, newY });
+                        visited[newX][newY] = true;
                     }
                 }
             }
