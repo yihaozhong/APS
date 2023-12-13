@@ -1,0 +1,1 @@
+Practice writing pseudo code and algirthms in English instead of coding language. 
